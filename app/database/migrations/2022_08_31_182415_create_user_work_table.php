@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWorkTagTable extends Migration
+class CreateUserWorkTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,16 @@ class CreateWorkTagTable extends Migration
      */
     public function up()
     {
-        Schema::create('work_tag', function (Blueprint $table) {
+        Schema::create('user_work', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('work_id');
-            $table->unsignedBigInteger('tag_id');
             
             // 複合主キー
-            $table->primary(['work_id','tag_id']);
+            $table->primary(['user_id','work_id']);
             
             // 外部キー制約
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('work_id')->references('id')->on('works')->onDelete('cascade');
-            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
-            
         });
     }
 
@@ -34,6 +33,6 @@ class CreateWorkTagTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('work_tag');
+        Schema::dropIfExists('user_work');
     }
 }

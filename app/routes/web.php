@@ -12,13 +12,21 @@
 */
 
 // Route::get('/', function(){
-//     return view('welcome');
+//     return view('index');
 // });
-Route::get('/works', 'WorkController@index');
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// index'/'から'/works'に変更したら上手くいった
+Route::get('/', 'WorkController@index');
+Route::get('/works/create', 'WorkController@create');
+Route::get('/works/{work}/edit', 'WorkController@edit');
+Route::put('/works/{work}', 'WorkController@update');
+Route::get('/works/{work}', 'WorkController@show');
+Route::post('/works' , 'WorkController@store');
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
+
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
