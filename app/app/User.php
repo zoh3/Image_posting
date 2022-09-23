@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'age', 'sex', 'image', 'email', 'password',
     ];
 
     /**
@@ -36,4 +36,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function works(){
+        return $this->belongsToMany('App\Work','user_work');
+    }
+    
+    public function userHasRole($user_age)
+    {
+        foreach($this->users as $user)
+        {
+            // userの年齢が18歳以上
+            if($user_age == $user->age >= 18)
+            {
+                return true;
+            }   
+                return false;
+        }
+    }
+// サイトは動くが年齢関係なく制限がかかってしまう
+// connotにしたら見られるがcreate画面でＲ18選択しても適用されない
 }
