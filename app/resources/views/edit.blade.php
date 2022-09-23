@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+@extends('layouts.app')
+
+@section('content')
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
@@ -19,21 +22,51 @@
             <div class="title">
                 <h2>作品名</h2>
                 <input type="text" name="work[title]" placeholder="タイトル"　value="{{ $work->title }}"/>
-                <p class="title_error" style="color:red">{{$errors->first('post.title')}}</p>
+                
+            <!--<style>-->
+            <!--    img{-->
+            <!--        max-width: 100%;-->
+            <!--        height: auto;-->
+            <!--    }-->
+            <!--</style>-->
+            <div class="image">
+                <input type="file" name="image" value="{{ $work->body }}"/>
+                @if($work->image)
+                <img src='{{ $work->image }}'>
+                @endif
             </div>
             
-            <dev class="image">
-                <p>{{ $work->body }}</p>
-                <img src='{{ $work->image }}' width='100px' height='100px'>
-            </dev>
+           
+            <div class="tags">
+                <textarea id="tags" type="text" name="tags" rows="3" cols="40" style="text-align:left;">
+                    @foreach($work->tags as $tag)
+                    {{ trim($tag->name) }} 
+                    @endforeach
+                </textarea>
+                    
+            </div>
+           
+            <input type="text" id="tags" name="tags" placeholder="＃(半角)タグを入力">
             
             <div class="body">
                 <h2>コメント</h2>
-                <textarea name="work[body]" placeholder="コメント">{{ $work->body}}</textarea>
-                <p class="title_error" style="color:red">{{$errors->first('post.body')}}</p>
+                <textarea name="work[body]" placeholder="コメント">{{ $work->body }}</textarea>
+                
+            </div>
+            <div class="age">
+                <p>成人向けコンテンツとして投稿する</p>
+               <label>
+                   
+                   <input type="radio" name="age" value="yes" required>はい
+               </label>
+               <label>
+                   
+                   <input type="radio" name="age" value="no">いいえ
+               </label>
             </div>
             <input type="submit" value="更新"/>
         </form>
         <div class="戻る">[<a href="/works/{{ $work->id }}">戻る</a>]</div>
     </body>
 </html>
+@endsection

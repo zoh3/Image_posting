@@ -14,11 +14,12 @@ class CreateWorkTagTable extends Migration
     public function up()
     {
         Schema::create('work_tag', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('work_id');
             $table->unsignedBigInteger('tag_id');
-            
+            $table->timestamps();
             // 複合主キー
-            $table->primary(['work_id','tag_id']);
+            // $table->primary(['work_id','tag_id']);
             
             // 外部キー制約
             $table->foreign('work_id')->references('id')->on('works')->onDelete('cascade');
